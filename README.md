@@ -28,11 +28,14 @@ Sempre que um pedido for criado:
 - Docker
 - Postgres 16+
 
-Na pasta raiz do projeto execute:
-
-Verifique 
+Na pasta raiz do projeto, execute:
 ```js
-  ### `docker  compose up`
+  ### `docker compose up --build`
+```
+
+Após o build, pode descartar os parâmetros extras: 
+```js
+  ### `docker compose up`
 ```
 
 ## 🚀 Tecnologias Utilizadas
@@ -62,12 +65,12 @@ Verifique
 
 ## ⚠️ Considerações
 
-- Para simplificar o desenvolvimento optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServidePublisher).
+- Para simplificar o desenvolvimento, optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServicePublisher).
 
 ---
 
-## 📈 Potenciais Melhorias Futuras
+## 📈 Melhorias se houvesse mais tempo
 
-- Desacoplar totalmente order do publisher do Service Bus.
+- Desacoplar totalmente o Order do publisher do Service Bus.
 - Inclusão de testes.
 ---
