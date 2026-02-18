@@ -4,7 +4,7 @@
 
 Sistema de gestão de pedidos com processamento assíncrono utilizando **Outbox Pattern** para garantir consistência transacional e confiabilidade na mensageria.
 
-# 🎯 Objetivo do Desafio
+## 🎯 Objetivo do Desafio
 
 Desenvolver um sistema onde é possível:
 
@@ -19,7 +19,7 @@ Sempre que um pedido for criado:
 3. Um processor publica o evento no Azure Service Bus.
 4. Um worker consome a mensagem.
 5. O status do pedido é atualizado seguindo a sequência:
----
+
 
 
 ## ⚙️ Pre-requisitos do Projeto
@@ -71,8 +71,6 @@ Parar o container:
 - Entity Framework Core
 - PostgreSQL
 - Azure Service Bus
-- BackgroundService
-- Health Checks
 
 ## Frontend
 - React
@@ -84,20 +82,14 @@ Parar o container:
 - Docker
 - Docker Compose
 - PostgreSQL
-- PgAdmin
-
----
 
 
 ## ⚠️ Considerações
 
 - Para simplificar o desenvolvimento, optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServicePublisher).
-- Para simplificar o desenvolvimento, optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServicePublisher).
 
----
 
 ## 📈 Melhorias se houvesse mais tempo
 
 - Desacoplar totalmente o Order do publisher do Service Bus.
 - Inclusão de testes.
----
