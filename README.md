@@ -94,6 +94,7 @@ Parar o container:
 
 ## 📈 Melhorias se houvesse mais tempo
 
+- Finalizar o Chatbot.
 - Desacoplar totalmente o Order do publisher do Service Bus.
 - Refinar idempotencia do Consumer.
 - Inclusão de testes.
