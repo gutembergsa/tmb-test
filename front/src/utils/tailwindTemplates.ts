@@ -7,4 +7,4 @@ export const baseControlButtonLayout =
     'px-5 py-3 rounded-md text-base font-bold'
 export const baseScoreListButtonLayout = 'rounded-md text-base font-bold'
 export const baseTableRowTemplate =
-    'grid grid-cols-[220px_minmax(160px,_1fr)_minmax(100px,_1fr)_100px_140px_minmax(84px,_1fr)]'
+    'grid grid-cols-[100px_minmax(80px,_1fr)_minmax(80px,_1fr)_minmax(80px,_1fr)_minmax(80px,_1fr)_minmax(80px,_1fr)]'

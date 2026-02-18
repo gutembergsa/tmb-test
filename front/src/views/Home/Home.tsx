@@ -28,19 +28,22 @@ const Home = () => {
                 {' '}
                 <Header />
                 <VerticalSpace spacing={40} />
+                <div className={`${baseBlockPaddingType1} w-full`}>
+                    <p className={`text-2xl font-bold`}>Lista de Pedidos</p>
+                    <VerticalSpace spacing={30} />
+                    <p className="text-[13px] font-normal text-[#555B58]">
+                        Duvidas? Converse com nosso chat!
+                    </p>
+                </div>
                 <div
-                    className={`${baseBlockPaddingType1} grid grid-cols-2 gap-6 justify-center`}>
-                    <div className="">
-                        <p className={`text-2xl font-bold`}>Lista de Pedidos</p>
-                        <VerticalSpace spacing={30} />
-                        <p className="text-[13px] font-normal text-[#555B58]">
-                            Duvidas? Converse com nosso chat!
-                        </p>
+                    className={`${baseBlockPaddingType1} grid grid-cols-2 gap-6 justify-center max-[1042px]:grid-cols-1`}>
+                    <div className="max-[1042px]:grid-row-2">
                         <VerticalSpace spacing={20} />
                         <div className="p-[20px] rounded-lg">
                             <Chat />
                         </div>
                     </div>
+
                     <div className="">
                         <div className="flex gap-[30px] justify-end">
                             <button

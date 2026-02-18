@@ -51,7 +51,7 @@ const CreateOrderModal = () => {
                         {...register('cliente')}
                     />
                 </label>
-                <label className="col-span-full" htmlFor="cliente">
+                <label className="col-span-full" htmlFor="produto">
                     <p className="mb-[4px] text-base text-[#555B58] font-bold">
                         Produto
                     </p>
