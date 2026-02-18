@@ -47,7 +47,7 @@ builder.Services.AddLogging(builder => builder.SetMinimumLevel(LogLevel.Debug).A
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!)
-    .AddAzureServiceBusQueue(builder.Configuration.GetConnectionString("AzureServiceBusConnection")!, "orders");
+    .AddAzureServiceBusTopic(builder.Configuration.GetConnectionString("AzureServiceBusConnection")!, "order-events");
 
 var app = builder.Build();
 
@@ -65,6 +65,12 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<OrderHubService>("/orderHub");
 app.MapHealthChecks("/health");
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
 

@@ -30,14 +30,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
             console.log({ orders, updatedOrder })
             return { orders: [...orders] }
         }),
-    // updateOrder: (updatedOrder) =>
-    //     set((state) => ({
-    //         orders: state.orders.map((order) =>
-    //             order.id === updatedOrder.id
-    //                 ? { ...order, ...updatedOrder }
-    //                 : order
-    //         ),
-    //     })),
     getOrdersRequest: async () => {
         set({ loading: true })
         const orders = await fetchAllOrders()
@@ -48,12 +40,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
 
         const data = await fetchCreateOrder(order)
         get().addOrder(data)
-
-        // location.reload()
         set({ loading: false })
     },
 }))
-
-// export const useGetOrdersRequest = async () => {
-//     return await fetchAllOrders()
-// }

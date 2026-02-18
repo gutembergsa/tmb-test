@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: gutemberg
+      POSTGRES_DB: OrderApiDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./api
+    container_name: dotnet_api
+    restart: always
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=OrderApiDb;Username=postgres;Password=gutemberg
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "5167:8080"
+    depends_on:
+      - postgres
+
+  front:
+    build:
+      context: ./front
+    container_name: react_front
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:

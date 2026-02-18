@@ -14,7 +14,6 @@ namespace api.Service
     internal sealed class OutboxProcessorService(
         NpgsqlDataSource dataSource,
         IServiceBusPublisher serviceBusPublisher,
-        ILogger<OrderNotificationService> logger,
         IHubContext<OrderHubService> orderHub)
     {
         private const int BatchSize = 10;
@@ -44,8 +43,6 @@ namespace api.Service
                     var messageType = Helpers.AssemblyReference.Assembly.GetType(outboxMessage.Type)!;
 
                     if (JsonSerializer.Deserialize(outboxMessage.Content, messageType) is not Order deserializeMessage) throw new Exception("Order not found");
-
-                    logger.LogInformation("\n Publicando {content}... \n", outboxMessage.Content); //remover
 
                     var orderCreatedEvent = new OrderCreatedEvent
                     {
@@ -95,7 +92,6 @@ namespace api.Service
                 catch (Exception ex)
                 {
 
-                    logger.LogError(ex, "Error in OutboxProcessorService. Message: {Message} | StackTrace: {StackTrace}", ex.Message, ex.StackTrace);
 
                     await connection.ExecuteScalarAsync(
                         """

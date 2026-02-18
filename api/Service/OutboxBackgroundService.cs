@@ -12,7 +12,6 @@ namespace api.Service
         {
             try
             {
-                logger.LogInformation("\n Starting OutboxBackgroundService... \n");//remover
 
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -21,21 +20,20 @@ namespace api.Service
 
                     await outboxProcessor.Execute(stoppingToken);
 
-                    // Simulate running Outbox processing every N seconds
                     await Task.Delay(TimeSpan.FromSeconds(OutboxProcessorFrequency), stoppingToken);
                 }
             }
             catch (OperationCanceledException)
             {
-                logger.LogInformation("OutboxBackgroundService cancelled.");//remover
+                logger.LogInformation("OutboxBackgroundService cancelled.");
             }
-            // catch (Exception ex)
-            // {
-            //     logger.LogError(ex, "An error occurred in OutboxBackgroundService");//remover
-            // }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred in OutboxBackgroundService");
+            }
             finally
             {
-                logger.LogInformation("OutboxBackgroundService finished.");//remover
+                logger.LogInformation("OutboxBackgroundService finished.");
             }
         }
     }

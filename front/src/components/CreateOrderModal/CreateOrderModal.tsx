@@ -1,5 +1,3 @@
-// type ExecutionSettingsModalType = {};
-
 import {
     baseContentBoxStruct,
     baseControlButtonLayout,

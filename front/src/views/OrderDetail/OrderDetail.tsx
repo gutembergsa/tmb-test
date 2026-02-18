@@ -3,10 +3,7 @@ import { useParams } from 'react-router'
 import type { Order } from '../../utils/config'
 import { fetchOrdersById, setupSignalRConnection } from '../../utils/fetch'
 import { Header } from '../../components'
-import {
-    baseBlockPaddingType1,
-    baseControlButtonLayout,
-} from '../../utils/tailwindTemplates'
+import { baseBlockPaddingType1 } from '../../utils/tailwindTemplates'
 import { useSpacing } from '../../hooks'
 
 const OrderDetail = () => {

@@ -1,10 +1,6 @@
 import { create } from 'zustand'
 
 interface UIState {
-    // showModalExecutionSettings: boolean
-    // dataModalExecutionSettings: unknown
-    // toggleModalExecutionSettings: (data?: unknown) => void
-
     showModalCreateOrder: boolean
     dataModalCreateOrder: unknown
     toggleModalCreateOrder: (data?: unknown) => void

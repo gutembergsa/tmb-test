@@ -1,13 +1,3 @@
-// export const fetchCommand = async (comandName: string, data: boolean) => {
-//     console.log({ data })
-//     await fetch(ESP_SERVER_URL + '/comando', {
-//         method: 'POST',
-//         mode: 'no-cors',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ name: comandName, state: data }),
-//     })
-// }
-
 import type { Order } from '../config'
 
 export const fetchAllOrders = async (): Promise<Order[]> => {
