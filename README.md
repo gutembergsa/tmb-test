@@ -27,15 +27,40 @@ Sempre que um pedido for criado:
 - .NET 8 
 - Docker
 - Postgres 16+
+ 
+.env:
+```js
+
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=;Database=;Username=;Password=",
+    "AzureServiceBusConnection": "Endpoint="
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+
+
+```
 
 Na pasta raiz do projeto, execute:
 ```js
-  ### `docker compose up --build`
+  docker compose up --build
 ```
 
 Após o build, pode descartar os parâmetros extras: 
 ```js
-  ### `docker compose up`
+  docker compose up
+```
+
+Parar o container: 
+```js
+  docker compose down
 ```
 
 ## 🚀 Tecnologias Utilizadas
