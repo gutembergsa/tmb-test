@@ -8,7 +8,6 @@ namespace api.Service
     public class ServiceBusPublisher(ServiceBusClient serviceBusClient) : IServiceBusPublisher
     {
 
-        private const string QueueName = "orders";
         private const string TopicName = "order-events";
 
         public async Task PublishOrderCreatedEventAsync(OrderCreatedEvent orderEvent)
@@ -26,9 +25,6 @@ namespace api.Service
                 }
             };
 
-            await using var queueSender = serviceBusClient.CreateSender(QueueName);
-            await queueSender.SendMessageAsync(message);
-
 
             await using var topicSender = serviceBusClient.CreateSender(TopicName);
             await topicSender.SendMessageAsync(message);
@@ -41,9 +37,6 @@ namespace api.Service
             {
                 MessageId = id.ToString()
             };
-
-            await using var queueSender = serviceBusClient.CreateSender(QueueName);
-            await queueSender.SendMessageAsync(messageData);
 
             await using var topicSender = serviceBusClient.CreateSender(TopicName);
             await topicSender.SendMessageAsync(messageData);

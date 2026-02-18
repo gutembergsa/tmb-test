@@ -27,6 +27,7 @@ Sempre que um pedido for criado:
 - .NET 8 
 - Docker
 - Postgres 16+
+- Criar tópico no Azure Service Bus com o nome **order-events** e uma subscription com o nome **notification** (ative a detecção de duplicidade no momento da criação do tópico).
  
 .env:
 ```js
@@ -90,6 +91,7 @@ Parar o container:
 
 ## ⚠️ Considerações
 
+- Para simplificar o desenvolvimento, optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServicePublisher).
 - Para simplificar o desenvolvimento, optei por criar o Worker consumer (OrderProcessor em background) na mesma aplicação do publisher (ServicePublisher).
 
 ---
