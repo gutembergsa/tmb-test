@@ -37,11 +37,6 @@ const Chat = () => {
         }
     }
 
-    // // Auto scroll
-    // useEffect(() => {
-    //     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-    // }, [messages, loading])
-
     return (
         <div className="flex flex-col h-[300px] bg-gray-500 rounded-lg overflow-hidden">
             {/* Chat Messages */}
