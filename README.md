@@ -34,7 +34,8 @@ Backend .env:
 {
   "ConnectionStrings": {
     "DefaultConnection": "Host=localhost;Port=;Database=;Username=;Password=",
-    "AzureServiceBusConnection": "Endpoint="
+    "AzureServiceBusConnection": "Endpoint=",
+    "OpenIAApiKey": ""
   },
   "Logging": {
     "LogLevel": {
@@ -46,12 +47,6 @@ Backend .env:
 }
 
 
-```
-
-Frontend .env:
-```js
-
-OPENAI_API_KEY= 
 
 ```
 
