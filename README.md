@@ -21,7 +21,6 @@ Sempre que um pedido for criado:
 5. O status do pedido é atualizado seguindo a sequência:
 
 
-
 ## ⚙️ Pre-requisitos do Projeto
 
 - .NET 8 
@@ -64,6 +63,8 @@ Parar o container:
   docker compose down
 ```
 
+![alt text](diagrama.jpg)
+
 ## 🚀 Tecnologias Utilizadas
 
 ## Backend
@@ -92,4 +93,5 @@ Parar o container:
 ## 📈 Melhorias se houvesse mais tempo
 
 - Desacoplar totalmente o Order do publisher do Service Bus.
+- Refinar idempotencia do Consumer.
 - Inclusão de testes.

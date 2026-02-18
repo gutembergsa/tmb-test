@@ -1,4 +1,4 @@
-import { CreateOrderModal, Header } from '../../components'
+import { Chat, CreateOrderModal, Header } from '../../components'
 import {
     baseBlockPaddingType1,
     baseControlButtonLayout,
@@ -38,7 +38,9 @@ const Home = () => {
                             Duvidas? Converse com nosso chat!
                         </p>
                         <VerticalSpace spacing={20} />
-                        <div className="bg-black w-full h-full"></div>
+                        {/* <div className="bg-red-200 rounded-lg w-full h-full">
+                            <Chat />
+                        </div> */}
                     </div>
                     <div className="">
                         <div className="flex gap-[30px] justify-end">
