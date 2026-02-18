@@ -1,2 +1,2 @@
 export * from './fetch-helper'
-export * from './websocket-helper'
+export * from './signalr-helper'

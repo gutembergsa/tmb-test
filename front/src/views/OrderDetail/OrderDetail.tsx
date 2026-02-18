@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import type { Order } from '../../utils/config'
-import { fetchOrdersById } from '../../utils/fetch'
+import { fetchOrdersById, setupSignalRConnection } from '../../utils/fetch'
 import { Header } from '../../components'
 import {
     baseBlockPaddingType1,
@@ -21,6 +21,10 @@ const OrderDetail = () => {
             setOrder(null)
         }
     }, [id])
+
+    useEffect(() => {
+        setupSignalRConnection()
+    }, [])
 
     if (!order) return
 

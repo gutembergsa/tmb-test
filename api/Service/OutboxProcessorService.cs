@@ -1,20 +1,28 @@
 
+using System.Security.Claims;
 using System.Text.Json;
 using api.Interfaces;
 using api.Models;
 using Azure.Messaging.ServiceBus.Administration;
 using Dapper;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR;
 using Npgsql;
 
 namespace api.Service
 {
-    internal sealed class OutboxProcessorService(NpgsqlDataSource dataSource, IServiceBusPublisher serviceBusPublisher, ILogger<OrderNotificationService> logger)
+    internal sealed class OutboxProcessorService(
+        NpgsqlDataSource dataSource,
+        IServiceBusPublisher serviceBusPublisher,
+        ILogger<OrderNotificationService> logger,
+        IHubContext<OrderHubService> orderHub)
     {
         private const int BatchSize = 10;
 
         public async Task<int> Execute(CancellationToken cancellationToken = default)
         {
+            List<Order> orders = [];
+
             await using var connection = await dataSource.OpenConnectionAsync(cancellationToken);
             await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
 
@@ -68,27 +76,33 @@ namespace api.Service
                         transaction: transaction
                     );
 
-                    await connection.ExecuteAsync(
+                    var order = await connection.QuerySingleOrDefaultAsync<Order>(
                         """
                         UPDATE "Orders"
                         SET "Status" = @Status, "UpdatedAt" = @UpdatedAt
                         WHERE "Id" = @Id
+                        RETURNING *;
                         """,
                         new { Status = "Processando", UpdatedAt = DateTime.UtcNow, deserializeMessage.Id },
                         transaction: transaction
                     );
 
+                    if (order != null)
+                    {
+                        orders.Add(order);
+                    }
                 }
                 catch (Exception ex)
                 {
 
                     logger.LogError(ex, "Error in OutboxProcessorService. Message: {Message} | StackTrace: {StackTrace}", ex.Message, ex.StackTrace);
 
-                    await connection.ExecuteAsync(
+                    await connection.ExecuteScalarAsync(
                         """
                         UPDATE "OutboxMessages"
                         SET "ProcessedOnUtc" = @ProcessedOnUtc, "Error" = @Error
                         WHERE "Id" = @Id
+                        RETURNING *;
                         """,
                         new { ProcessedOnUtc = DateTime.UtcNow, ex.Message },
                         transaction: transaction
@@ -97,6 +111,11 @@ namespace api.Service
             }
 
             await transaction.CommitAsync(cancellationToken);
+
+            foreach (Order order in orders)
+            {
+                await orderHub.Clients.All.SendAsync("OrderStatusUpdated", order, cancellationToken: cancellationToken);
+            }
 
             return outboxMessages.Count;
         }

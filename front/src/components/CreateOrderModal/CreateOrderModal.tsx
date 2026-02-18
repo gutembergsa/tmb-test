@@ -26,6 +26,7 @@ const CreateOrderModal = () => {
 
     const onSubmit: SubmitHandler<CreateOrderModalInputs> = (data) => {
         createOrdersRequest(data)
+        toggleModalCreateOrder()
     }
 
     return (
@@ -87,7 +88,7 @@ const CreateOrderModal = () => {
                 <button
                     type="submit"
                     className={`${baseControlButtonLayout} ml-auto bg-[#3AB45C] w-min text-white text-xs`}>
-                    Prosseguir
+                    Salvar
                 </button>
             </form>
         </div>

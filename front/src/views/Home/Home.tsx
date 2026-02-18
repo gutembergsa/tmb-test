@@ -11,6 +11,7 @@ import { HOME_TABLE_HEADERS, INTL_DATE_FORMAT } from '../../utils/config'
 
 import DetailIcon from '../../assets/eye.png'
 import CloseIcon from '../../assets/x-cross-icon.png'
+import { setupSignalRConnection } from '../../utils/fetch'
 
 const Home = () => {
     const { VerticalSpace } = useSpacing()
@@ -19,6 +20,7 @@ const Home = () => {
 
     useEffect(() => {
         getOrdersRequest()
+        setupSignalRConnection()
     }, [])
 
     return (

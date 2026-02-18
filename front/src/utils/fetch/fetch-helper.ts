@@ -28,8 +28,7 @@ export const fetchOrdersById = async (id: string): Promise<Order> => {
 
 export const fetchCreateOrder = async (
     order: Omit<Order, 'id' | 'createdAt'>
-): Promise<Response> => {
-    console.log({ order, teste: JSON.stringify(order) })
+): Promise<Order> => {
     return await fetch('http://localhost:5167/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -40,7 +39,7 @@ export const fetchCreateOrder = async (
             Status: order.status,
         }),
     })
-        .then((response) => response)
+        .then((response) => response.json())
         .catch((error) => {
             throw error
         })

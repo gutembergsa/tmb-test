@@ -5,13 +5,39 @@ import { fetchAllOrders, fetchCreateOrder } from '../fetch'
 interface OrderState {
     orders: Order[]
     loading: boolean
+    addOrder: (order: Order) => void
+    updateOrder: (updatedOrder: Order) => void
     getOrdersRequest: () => void
     createOrdersRequest: (order: Omit<Order, 'id' | 'createdAt'>) => void
 }
 
-export const useOrderStore = create<OrderState>((set) => ({
+export const useOrderStore = create<OrderState>((set, get) => ({
     orders: [],
     loading: false,
+    addOrder: (order) =>
+        set((state) => {
+            const orders = state.orders.map((order) => ({ ...order }))
+            return { orders: [{ ...order }, ...orders] }
+        }),
+    updateOrder: (updatedOrder) =>
+        set((state) => {
+            const orders = state.orders.map((order) => {
+                if (order.id === updatedOrder.id) {
+                    return { ...updatedOrder }
+                }
+                return { ...order }
+            })
+            console.log({ orders, updatedOrder })
+            return { orders: [...orders] }
+        }),
+    // updateOrder: (updatedOrder) =>
+    //     set((state) => ({
+    //         orders: state.orders.map((order) =>
+    //             order.id === updatedOrder.id
+    //                 ? { ...order, ...updatedOrder }
+    //                 : order
+    //         ),
+    //     })),
     getOrdersRequest: async () => {
         set({ loading: true })
         const orders = await fetchAllOrders()
@@ -19,8 +45,11 @@ export const useOrderStore = create<OrderState>((set) => ({
     },
     createOrdersRequest: async (order) => {
         set({ loading: true })
-        await fetchCreateOrder(order)
-        location.reload()
+
+        const data = await fetchCreateOrder(order)
+        get().addOrder(data)
+
+        // location.reload()
         set({ loading: false })
     },
 }))

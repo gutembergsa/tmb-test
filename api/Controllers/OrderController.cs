@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Order;
-using api.Dtos.Stock;
 using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
@@ -15,6 +14,7 @@ using api.Service;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.Amqp.Framing;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -23,22 +23,12 @@ namespace api.Controllers
 {
     [Route("api/order")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrderController(ApplicationDBContext context, IOrderRepository orderRepo, IServiceBusPublisher serviceBusPublisher, NpgsqlDataSource dataSource) : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
-        private readonly IOrderRepository _orderRepo;
-        public readonly IServiceBusPublisher _serviceBusPublisher;
-        private readonly NpgsqlDataSource _dataSource;
-
-        public OrderController(ApplicationDBContext context, IOrderRepository orderRepo, IServiceBusPublisher serviceBusPublisher, NpgsqlDataSource dataSource)
-        {
-            _orderRepo = orderRepo;
-            _context = context;
-            _serviceBusPublisher = serviceBusPublisher;
-            _dataSource = dataSource;
-        }
-
-        // [Authorize]
+        private readonly ApplicationDBContext _context = context;
+        private readonly IOrderRepository _orderRepo = orderRepo;
+        public readonly IServiceBusPublisher _serviceBusPublisher = serviceBusPublisher;
+        private readonly NpgsqlDataSource _dataSource = dataSource;
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateOrderRequestDto orderDto)
@@ -91,7 +81,7 @@ namespace api.Controllers
 
             var orders = await _orderRepo.GetAllAsync(query);
 
-            var orderDto = orders.Select(s => s.ToOrderDto()).ToList();
+            var orderDto = orders.Select(s => s.ToOrderDto()).OrderByDescending(o => o.CreatedAt).ToList();
 
             return Ok(orderDto);
         }

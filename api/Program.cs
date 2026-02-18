@@ -1,14 +1,8 @@
 using api.Data;
 using api.Interfaces;
-using api.Models;
 using api.Repository;
 using api.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Logging;
 using Azure.Messaging.ServiceBus;
 using Npgsql;
 
@@ -16,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -42,46 +37,19 @@ builder.Services.AddSingleton(_ =>
 });
 
 
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultAuthenticateScheme =
-//     options.DefaultChallengeScheme =
-//     options.DefaultForbidScheme =
-//     options.DefaultScheme =
-//     options.DefaultSignInScheme =
-//     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-// }).AddJwtBearer(options =>
-// {
-//     options.TokenValidationParameters = new TokenValidationParameters
-//     {
-//         ValidateIssuer = true,
-//         ValidIssuer = builder.Configuration["JWT:Issuer"],
-//         ValidateAudience = true,
-//         ValidAudience = builder.Configuration["JWT:Audience"],
-//         ValidateIssuerSigningKey = true,
-//         IssuerSigningKey = new SymmetricSecurityKey(
-//             System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
-//         )
-//     };
-// });
-
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IServiceBusPublisher, ServiceBusPublisher>();
 
 builder.Services.AddScoped<OutboxProcessorService>();
 
-// builder.Services.AddScoped<ITokenService, TokenService>();
-
 
 builder.Services.AddLogging(builder => builder.SetMinimumLevel(LogLevel.Debug).AddConsole());
 
-var app = builder.Build();
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!)
+    .AddAzureServiceBusQueue(builder.Configuration.GetConnectionString("AzureServiceBusConnection")!, "orders");
 
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+var app = builder.Build();
 
 app.UseHttpsRedirection();
 
@@ -95,6 +63,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<OrderHubService>("/orderHub");
+app.MapHealthChecks("/health");
 
 app.Run();
 
