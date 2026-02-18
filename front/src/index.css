@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+:root {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+}
+a:hover {
+    color: #535bf2;
+}
+
+body {
+    margin: 0;
+    background-color: rgb(237, 245, 243);
+    justify-content: center;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    width: 100%;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+button {
+    cursor: pointer;
+    transition: border-color 0.25s;
+}
+button:disabled {
+    opacity: 55%;
+}
+button:active:not(:disabled) {
+    border: inherit inherit inherit;
+    transform: translateY(4px);
+}
+
+button:focus,
+button:focus-visible {
+    outline: 4px auto inherit;
+}
+
+input:focus-within, input:focus{
+    border: unset;
+    border-width: 0px;  
+}
+
+
+[type="checkbox"] {
+    appearance: none;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color: #213547;
+        background-color: #ffffff;
+    }
+}
+
+
+@layer utilities {
+  /* For Chrome, Safari, and Opera */
+  .scrollbar-thin-width::-webkit-scrollbar {
+    width: 3px; /* Adjust the width as needed */
+    height: 3px; /* Adjust the height for horizontal scrollbars */
+  }
+
+  /* For Firefox */
+  .scrollbar-thin-width {
+    scrollbar-width: none; /* Use 'auto' or 'none' as needed */
+  }
+
+    .scrollbar-thin-width:hover {
+    scrollbar-width: thin; /* Use 'auto' or 'none' as needed */
+  }
+
+  /* Optional: Style the thumb and track for better aesthetics */
+  .scrollbar-thin-width::-webkit-scrollbar-thumb {
+    background-color: #d1d5db; /* gray-300 */
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin-width::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
