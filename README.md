@@ -28,7 +28,7 @@ Sempre que um pedido for criado:
 - Postgres 16+
 - [Criar tópico no Azure Service Bus com o nome **order-events** e uma subscription com o nome **notification** (ative a detecção de duplicidade no momento da criação do tópico)](https://learn.microsoft.com/pt-br/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal).
  
-.env:
+Backend .env:
 ```js
 
 {
@@ -45,6 +45,13 @@ Sempre que um pedido for criado:
   "AllowedHosts": "*"
 }
 
+
+```
+
+Frontend .env:
+```js
+
+OPENAI_API_KEY= 
 
 ```
 
