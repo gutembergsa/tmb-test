@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useChatStore } from '../../utils/zustand/chat'
 import { baseControlButtonLayout } from '../../utils/tailwindTemplates'
 
