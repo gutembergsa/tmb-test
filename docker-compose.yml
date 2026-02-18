@@ -18,7 +18,7 @@ services:
     container_name: dotnet_api
     restart: always
     environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=OrderApiDb;Username=postgres;Password=gutemberg
+      - ConnectionStrings__DefaultConnection=Host=;Port=;Database=;Username=;Password= #preencher com dados do banco
       - ASPNETCORE_URLS=http://+:8080
     ports:
       - "5167:8080"

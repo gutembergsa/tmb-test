@@ -10,7 +10,6 @@ import { useEffect } from 'react'
 import { HOME_TABLE_HEADERS, INTL_DATE_FORMAT } from '../../utils/config'
 
 import DetailIcon from '../../assets/eye.png'
-import CloseIcon from '../../assets/x-cross-icon.png'
 import { setupSignalRConnection } from '../../utils/fetch'
 
 const Home = () => {
@@ -95,16 +94,6 @@ const Home = () => {
                                                         href={`/order/${order.id}`}>
                                                         <img
                                                             src={DetailIcon}
-                                                            alt=""
-                                                        />
-                                                    </a>
-                                                </td>
-                                                <td className="justify-self-center content-center">
-                                                    <a
-                                                        className={`${baseControlButtonLayout}`}
-                                                        href="">
-                                                        <img
-                                                            src={CloseIcon}
                                                             alt=""
                                                         />
                                                     </a>

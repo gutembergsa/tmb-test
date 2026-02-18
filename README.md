@@ -60,6 +60,11 @@ Após o build, pode descartar os parâmetros extras:
   docker compose up
 ```
 
+Acesse o sistema em: 
+```js
+  http://localhost:3000/
+```
+
 Parar o container: 
 ```js
   docker compose down
