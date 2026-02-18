@@ -38,9 +38,9 @@ const Home = () => {
                             Duvidas? Converse com nosso chat!
                         </p>
                         <VerticalSpace spacing={20} />
-                        {/* <div className="bg-red-200 rounded-lg w-full h-full">
+                        <div className="p-[20px] rounded-lg">
                             <Chat />
-                        </div> */}
+                        </div>
                     </div>
                     <div className="">
                         <div className="flex gap-[30px] justify-end">
