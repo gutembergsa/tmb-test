@@ -46,9 +46,11 @@ Backend .env:
   "AllowedHosts": "*"
 }
 
-
-
 ```
+
+No docker-compose.yml alterar os dados de acesso do DB :
+![alt text](docker_db_exemple.png)
+
 
 Na pasta raiz do projeto, execute:
 ```js
